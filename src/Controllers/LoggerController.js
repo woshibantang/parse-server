@@ -81,7 +81,9 @@ export class LoggerController extends AdaptableController {
     // make the passed in arguments object an array with the spread operator
     args = this.maskSensitive([...args]);
     args = [].concat(level, args);
-    this.adapter.log.apply(this.adapter, args);
+    process.nextTick(() => {
+      this.adapter.log.apply(this.adapter, args);
+    });
   }
 
   info() {
